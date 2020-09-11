@@ -1,0 +1,26 @@
+{
+  "name": "ienvironment-storage",
+  "version": "0.1.0",
+  "description": "node app for ienvironment's backend service storage",
+  "main": "server.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/maateuss/ienvironment-storage.git"
+  },
+  "keywords": [
+    "storage",
+    "microsservices",
+    "mqtt",
+    "node",
+    "js"
+  ],
+  "author": "Mateus Moura Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maateuss/ienvironment-storage/issues"
+  },
+  "homepage": "https://github.com/maateuss/ienvironment-storage#readme"
+}
