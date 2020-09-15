@@ -3,32 +3,45 @@ const MqttListener = require("./services/mqttlistener")
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const listener = new MqttListener();
+const db = require("./models/basemongooseconfig");
+const MessageFormatter = require('./services/messageformat');
 const app = express();
+const PORT = process.env.PORT || 8080;
+var Formatter = new MessageFormatter();
 
 var corsOptions = {
     origin: process.env.CORSORIGIN || "http://localhost:8081"
 };
 
-const listener = new MqttListener();
-
-listener.listen(function(topic, message){
-    console.log(message);
-});
 app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
-const db = require("./models/index");
 db.mongoose.connect(db.url,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{
     console.log("Connected to the mongo")
+    console.log("subscribing to listener")
+    startListener();
 }).catch(()=>{
     console.log("Cannot connect to the mongo", err);
     process.exit();
 });
+
+function startListener(){
+listener.listen(function(topic, message){
+    var message = Formatter.formatMessage(topic, message)
+    if(!!message){
+        message.save(message).then(()=>{
+            console.log('saved!')
+        }).catch((err)=>{
+            console.error(err);
+        })
+    }
+});
+}
 
 
 
@@ -38,7 +51,6 @@ app.get("/", (request, response) => {
 
 });
 
-const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, ()=>{
     console.log(`Server rodando na porta ${PORT}`);

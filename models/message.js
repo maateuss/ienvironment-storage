@@ -2,9 +2,11 @@ module.exports = mongoose => {
     var schema = mongoose.Schema(
         {
             topic: String,
-            message: String,
+            value: String,
             sensorId: String,
-            ambienteId: String
+            ambienteId: String,
+            parameter: String,
+            datetime: Date
         },
         {
             timestamps: true

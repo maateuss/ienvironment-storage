@@ -4,7 +4,6 @@ module.exports = class MqttListener {
     
     constructor(){
         client = mqtt.connect(process.env.BROKERURL)
-        console.log('opaaaa')
         client.on('connect', function(){
             client.subscribe('signals/#')
         })
