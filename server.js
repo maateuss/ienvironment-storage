@@ -10,11 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 var Formatter = new MessageFormatter();
 
-var corsOptions = {
-    origin: process.env.CORSORIGIN || "http://localhost:8081"
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(bodyParser.json());
 
